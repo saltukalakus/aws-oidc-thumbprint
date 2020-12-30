@@ -1,0 +1,15 @@
+service: aws-oidc-thumbprint
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment:
+    APP_IAM_AWS_REGION: ${file(.env.yml):APP_IAM_AWS_REGION}
+    APP_OIDC_IAM_ARN: ${file(.env.yml):APP_OIDC_IAM_ARN}   
+
+functions:
+  cron:
+    handler: handler
+    events:
+      # Invoke Lambda function every 5 minute
+      - schedule: cron(0/1 * * * ? *)

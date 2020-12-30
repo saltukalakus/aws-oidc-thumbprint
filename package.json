@@ -1,0 +1,10 @@
+{
+  "name": "aws-oidc-thumbprint",
+  "version": "0.1.0",
+  "description": "Updates the OIDC thumbprint as the certificate rotates",
+  "author": "saltukalakus@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "openssl-nodejs": "^1.0.5"
+  }
+}
