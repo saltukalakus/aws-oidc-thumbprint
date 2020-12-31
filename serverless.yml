@@ -1,15 +1,41 @@
 service: aws-oidc-thumbprint
 
+frameworkVersion: ">2.0.0"
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules:
+      forceInclude:
+        - get-ssl-certificate-fork
+
 provider:
   name: aws
   runtime: nodejs12.x
+
   environment:
-    APP_IAM_AWS_REGION: ${file(.env.yml):APP_IAM_AWS_REGION}
+    APP_AWS_REGION: ${file(.env.yml):APP_AWS_REGION}
     APP_OIDC_IAM_ARN: ${file(.env.yml):APP_OIDC_IAM_ARN}   
+    OIDC_LOGIN_DOMAIN: ${file(.env.yml):OIDC_LOGIN_DOMAIN}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - iam:GetOpenIDConnectProvider
+      Resource:
+        - ${file(.env.yml):APP_OIDC_IAM_ARN}  
+    - Effect: Allow
+      Action:
+        - iam:UpdateOpenIDConnectProviderThumbprint
+      Resource:
+        - ${file(.env.yml):APP_OIDC_IAM_ARN}  
 
 functions:
   cron:
-    handler: handler
+    handler: handler.run
     events:
       # Invoke Lambda function every 5 minute
       - schedule: cron(0/1 * * * ? *)

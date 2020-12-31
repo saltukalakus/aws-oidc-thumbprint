@@ -5,6 +5,10 @@
   "author": "saltukalakus@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "openssl-nodejs": "^1.0.5"
+    "get-ssl-certificate-fork": "^2.3.5"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.819.0",
+    "serverless-bundle": "^4.1.0"
   }
 }
