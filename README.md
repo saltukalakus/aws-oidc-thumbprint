@@ -1,13 +1,15 @@
 # aws-oidc-thumbprint
-AWS OIDC Identity Provider needs to pin the login domain certificate. You may find more details regarding this feature [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html)
 
-This tool helps to avoid service distribution by updating the AWS configuration for the certificate thumbprint if the login domain certificate changes. This is useful aspecially if you don't have a control for when the certificate is rotated for the identity provider login domain. E.g. if you are using an identity as a service solution (IaaS) like Auth0, Okta, Azure you may not have the control for the certificate rotation. 
+AWS's OIDC Identity Provider integration helps to integrate external identity providers to authenticate for AWS resource. Likely due to the sensitivity of the functionality, they require to pin the login domain certificate of the upstream identity provider. See this link [here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html) for more details.
 
-The tool is build as a Lambda function which runs every X minutes configured with RUN_LAMBDA_EVERY_X_MIN env variable to check the cert changes and update the thumbprint if needed.
+This tool helps to avoid service distribution by updating the AWS configuration for the certificate thumbprint if the login domain certificate changes. This is useful especially if you don't have control for the login domain the certificate rotation. For E.g. if you are using identity as a service solution (IaaS) like Auth0, Okta, Azure you likely have less control for the domain certificates.
 
-The script sends logs to [AWS CloudWatch](https://aws.amazon.com/cloudwatch/) for certificate rotation. Optionally, you can also send notifications to Slack with [Incomming Webhooks](https://api.slack.com/messaging/webhooks).
+As a simple solution, the solution here spins up a Lambda function that runs every X minutes configured with RUN_LAMBDA_EVERY_X_MIN env variable to check the certificate changes on the login domain and updates the thumbprint on AWS if needed.
 
-**By using this tool you are working-around a security feature. Though it may not be very common to pin the login domain certicate, you are accepting the associated the risks.**
+Event notifications are sent to [AWS CloudWatch](https://aws.amazon.com/cloudwatch/). Optionally, you can also send them to Slack with [Incoming Webhooks](https://api.slack.com/messaging/webhooks) integration.
+
+**By using this tool you are working-around a security feature. Though it may not be very common to pin the login domain certificate, you are accepting the associated risks. Please check your identity vendor first to see if they can provide a better solution.**
+
 
 ## Conf
 
