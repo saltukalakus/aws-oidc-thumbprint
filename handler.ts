@@ -1,6 +1,6 @@
 import AWS from "aws-sdk";
 import axios from 'axios';
-const sslCertificate = require('get-ssl-certificate-fork');
+const sslCertificate = require('get-ssl-certificate-tmp');
 
 import Config from './config';
 
