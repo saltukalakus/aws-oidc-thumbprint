@@ -10,7 +10,7 @@ custom:
     webpackConfig: './webpack.config.js'
     includeModules:
       forceInclude:
-        - get-ssl-certificate-fork
+        - get-ssl-certificate-tmp
         - axios
 
 provider:

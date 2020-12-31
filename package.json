@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
-    "get-ssl-certificate-fork": "^2.3.5"
+    "get-ssl-certificate-tmp": "^2.3.8",
+    "package-lock.json": "^1.0.0"
   },
   "devDependencies": {
     "aws-sdk": "^2.819.0",
