@@ -11,6 +11,7 @@ custom:
     includeModules:
       forceInclude:
         - get-ssl-certificate-fork
+        - axios
 
 provider:
   name: aws
@@ -20,6 +21,10 @@ provider:
     APP_AWS_REGION: ${file(.env.yml):APP_AWS_REGION}
     APP_OIDC_IAM_ARN: ${file(.env.yml):APP_OIDC_IAM_ARN}   
     OIDC_LOGIN_DOMAIN: ${file(.env.yml):OIDC_LOGIN_DOMAIN}
+    SLACK_WEB_HOOK: ${file(.env.yml):SLACK_WEB_HOOK}
+    STARTING_UPDATE_MSG: ${file(.env.yml):STARTING_UPDATE_MSG}
+    UPDATE_COMPLETED_MSG: ${file(.env.yml):UPDATE_COMPLETED_MSG}
+    ERROR_MSG: ${file(.env.yml):ERROR_MSG}
 
   iamRoleStatements:
     - Effect: Allow
@@ -37,5 +42,10 @@ functions:
   cron:
     handler: handler.run
     events:
-      # Invoke Lambda function every 5 minute
-      - schedule: cron(0/1 * * * ? *)
+      # Invoke Lambda function every X minute
+      - schedule: cron(0/${file(.env.yml):RUN_LAMBDA_EVERY_X_MIN} * * * ? *)
+      - http:
+          path: api/run
+          method: post
+          integration: lambda
+          cors: true

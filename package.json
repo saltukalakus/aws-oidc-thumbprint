@@ -5,6 +5,7 @@
   "author": "saltukalakus@gmail.com",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "get-ssl-certificate-fork": "^2.3.5"
   },
   "devDependencies": {
